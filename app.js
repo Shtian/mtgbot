@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 // test route
 app.get('/', function (req, res) { res.status(200).send('Hello world!') });
+app.post('/swallowthepost', function (req, res) { res.status(200).send('Thanks man.') });
 app.post('/card', magicbot);
 
 // error handler
