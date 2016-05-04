@@ -19,7 +19,7 @@ module.exports = function(req, res, next){
         payload.text = result.statusCode == 404 ? "Sorry, could not find a card by that name."
                                                 : "*Card name:* " + parsedBody.name +
                                                   "\n*Text:* " + parsedBody.text +
-                                                  "\n*Image:* " + parsedBody.editions[0].image_url;
+                                                  "\n*Image:* " + parsedBody.editions.reverse()[0].image_url;
         postToSlackWebHook(payload, function (error, status, body) {
           if (error) {
             return next(error);
