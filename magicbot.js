@@ -6,19 +6,21 @@ module.exports = function(req, res, next){
   const mtgApiPath = 'https://api.deckbrew.com/';
   const singleCardPath = 'mtg/cards/';
   const payload = { channel: req.body.channel_id };
+
   if (text) {
-    let searchterm = text.trim().toLowerCase().replace(/\s/g, '-');
-    searchterm = searchterm.replace(/'/g, '');
+    const searchterm = text.trim().toLowerCase().replace(/\s/g, '-').replace(/'/g, '');
     const apiCardpath = mtgApiPath + singleCardPath + searchterm;
     request.get(apiCardpath)
      .ok((res) => (res.status < 400 || res.status === 404))
      .then((result) => {
+       // Found card
        if(result.status !== 404){
          const card = JSON.parse(result.text);
          payload.text = answerBuilder.cardReply(card);
          postToSlackWebHook(payload, () => {
            return res.status(200).end();
          });
+       // Did not find card, but got enough letters to do a suggest search
        } else if (text.length >= 4) {
          answerBuilder.suggestionReply(text)
            .then((reply) => {
@@ -28,6 +30,7 @@ module.exports = function(req, res, next){
              });
            })
            .catch((e) => next(e));
+       // Card could not be found
        } else {
          postToSlackWebHook(`:sweat: Could not find a card named: ${text}`, () => {
            return res.status(200).end();

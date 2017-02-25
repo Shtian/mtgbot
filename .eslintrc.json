@@ -4,5 +4,8 @@
   },
   "extends": [
     "nrk"
-  ]
+  ],
+  "rules": {
+    "no-process-env": "off"
+  }
 }
