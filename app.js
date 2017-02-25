@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const magicbot = require('./magicbot');
+const magicbot = require('./src/magicbot');
 
 const app = express();
 const port = process.env.PORT || 3000;
