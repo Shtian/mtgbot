@@ -14,5 +14,9 @@
     "express": "^4.13.3",
     "request": "^2.65.0",
     "superagent": "^3.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.16.1",
+    "eslint-config-nrk": "^5.0.3-beta.0"
   }
 }
